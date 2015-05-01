@@ -2,7 +2,7 @@
 
 Description: General Employee Directory with phone lists and Company links, depts, and numbers.  
 
-This project was build using the Bootstrap MVC project Template.  Some of the features and functionality were  left in the project for future use.  
+This project was built using the Bootstrap MVC project Template in VS .  Some of the features and functionality were  left in the project for future use.  
 
 General MVC, C#, EF 6, SQL  company Directory, for use on Teaching MVC, EF, or C#  to new comers.  Works out of the box as is but could be easily Enhanced to accommodate any number of changes
 
