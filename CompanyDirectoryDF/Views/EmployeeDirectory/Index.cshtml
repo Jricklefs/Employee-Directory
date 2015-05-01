@@ -1,0 +1,92 @@
+﻿@model CompanyDirectoryDF.ViewModel.DirectoryIndexViewModel
+
+@{
+    ViewBag.Title = "Employee Directory";
+}
+<style type="text/css">
+     .table a{text-decoration:none; cursor:pointer;}
+</style>
+
+<h2>Employee Directory</h2>
+
+<div class="row text-center" style="margin:3px;">
+    <div class="label Address">
+        @(Html.Label(Model.Address.Street))
+   
+        @(Html.Label(Model.Address.City))
+
+        @(Html.Label(Model.Address.State))
+
+        @(Html.Label(Model.Address.Zip))
+    </div>
+</div>
+<div class="row text-center">
+    <span class="glyphicon glyphicon-phone-alt"></span> Main: <a href="tel:@Html.DisplayFor(m => Model.Address.Phone)"> @Html.DisplayFor(m => Model.Address.PhoneAsLong)</a>
+</div>
+<p>
+    @Html.ActionLink("Create New Employee", "Create", "Employees")
+
+</p>
+<table class="table">
+    <tr>
+        <th  style="text-align:center;">
+           Name
+        </th>
+        <th  style="text-align:center;">
+            Direct
+        </th>
+        <th>
+            Ext
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.CellPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.HomePhone)
+        </th>
+        <th>
+        </th>
+
+    </tr>
+
+
+    @foreach (var item in Model.DirectoryEmployees)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Employee.FullName)
+            </td>
+            <td>
+            @if(item.Employee.OfficePhone != null)
+                {
+               <a href="tel:@Html.DisplayFor(m => item.Employee.OfficePhone)"> @Html.DisplayFor(m => item.Employee.OfficePhoneAsLong)</a>
+            }
+            </td>
+            <td>
+               @if(item.Employee.Ext != null)
+                {
+                @Html.DisplayFor(m => item.Employee.Ext)
+               }
+            </td>
+            <td>
+
+                @if(item.Employee.CellPhone != null)
+                {
+                    <a href="tel:@Html.DisplayFor(m => item.Employee.CellPhone)"> @Html.DisplayFor(m => item.Employee.CellPhoneAsLong)</a>
+                }
+            </td>
+            <td>
+            @if (item.Employee.HomePhone != null)
+                {
+                <a href="tel:@Html.DisplayFor(m => item.Employee.HomePhone)">@Html.DisplayFor(m => item.Employee.HomePhoneAsLong)</a>
+            }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.Employee.ID }, null) |
+                @Html.ActionLink("Details", "Details", "Employees", new { id = item.Employee.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Employees", new { id = item.Employee.ID }, null)
+            </td>
+        </tr>
+    }
+    </table>
+

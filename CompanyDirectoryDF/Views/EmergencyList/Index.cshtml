@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CompanyDirectoryDF.ViewModel.EmergencyList>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .EmergencyContact {position:relative; padding:0 6px; cursor:pointer;}
+    .EmergencyContact div{display:none;}
+    .EmergencyContact:hover div{display:block;}
+    .EmergencyContactNumber{ position:absolute;  background-color:black; color:white; top:-15px; left:25px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; z-index:50; }
+    .EmergencyContactNumber a{color:white;}
+    .EmergencyContactNumber table{width:250px;}
+    .EmergencyContactNumber table tr th{text-align:center;}
+    .EmergencyContactNumber table tr td{padding:8px; }
+     .EmergencyContactNumber table th div{padding:3px; background-color:#0c8fee; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+</style>
+
+<h2>Emeregency Contact List</h2>
+<p>
+    @Html.ActionLink("Create", "Create", "EmergencyList") |
+    @Html.ActionLink("Back to Directory", "index", "EmployeeDirectory")
+</p>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <b> @Html.DisplayFor(modelItem => item.EmergencyListName)</b>
+            </td>
+            @foreach (var emp in item.EmployeesInEmergencyList)
+            {
+                <td>
+
+                    <div class="EmergencyContact">
+                        @Html.DisplayFor(ModelItem => emp.FullName)
+                        <div class="EmergencyContactNumber">
+                            <table >
+                                <tr>
+                                    <th><div> @Html.DisplayFor(ModelItem => emp.FullName) </div> </th>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(ModelItem => emp.CellPhone)  : <a href="tel:@emp.CellPhone">@Html.DisplayFor(m => emp.CellPhoneAsLong)</a> </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(ModelItem => emp.HomePhone)  : <a href="tel:@emp.HomePhone"> @Html.DisplayFor(m => emp.HomePhoneAsLong)</a> </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(ModelItem => emp.OfficePhone)  : <a href="tel:@emp.OfficePhone">@Html.DisplayFor(m => emp.OfficePhoneAsLong)</a> ext: @emp.Ext </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EmergencyListID })
+            </td>
+        </tr>
+    }
+</table>

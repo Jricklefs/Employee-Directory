@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CompanyDirectoryDFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DirectoryID" Type="Int32" Nullable="false" />
+    <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Directory" Relationship="Self.FK_Address_Directory" FromRole="Address" ToRole="Directory" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DirectoryID" Type="Int32" />
+    <NavigationProperty Name="Directory" Relationship="Self.FK_Departments_Directory" FromRole="Departments" ToRole="Directory" />
+  </EntityType>
+  <EntityType Name="Directory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Directory" FromRole="Directory" ToRole="Address" />
+    <NavigationProperty Name="Departments" Relationship="Self.FK_Departments_Directory" FromRole="Directory" ToRole="Departments" />
+    <NavigationProperty Name="DirectoryEmployees" Relationship="Self.FK_DirectoryEmployee_Directory" FromRole="Directory" ToRole="DirectoryEmployee" />
+    <NavigationProperty Name="PhoneLists" Relationship="Self.FK_PhoneList_Directory" FromRole="Directory" ToRole="PhoneList" />
+    <NavigationProperty Name="WebURLWebLocations" Relationship="Self.FK_WebURLWebLocation_Directory" FromRole="Directory" ToRole="WebURLWebLocation" />
+  </EntityType>
+  <EntityType Name="DirectoryEmployee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="DirectoryID" Type="Int32" />
+    <NavigationProperty Name="Directory" Relationship="Self.FK_DirectoryEmployee_Directory" FromRole="DirectoryEmployee" ToRole="Directory" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_DirectoryEmployee_Employee1" FromRole="DirectoryEmployee" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OfficePhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="Ext" Type="Int32" />
+    <Property Name="CellPhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="HomePhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="DirectoryEmployees" Relationship="Self.FK_DirectoryEmployee_Employee1" FromRole="Employee" ToRole="DirectoryEmployee" />
+    <NavigationProperty Name="PhoneLists" Relationship="Self.FK_PhoneList_Employee" FromRole="Employee" ToRole="PhoneList" />
+    <NavigationProperty Name="EmployeeSkills" Relationship="CompanyDirectoryDFModel.FK_EmployeeSkills_Employee" FromRole="Employee" ToRole="EmployeeSkill" />
+  </EntityType>
+  <EntityType Name="PhoneList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneListNameID" Type="Int32" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="DirectoryID" Type="Int32" />
+    <NavigationProperty Name="Directory" Relationship="Self.FK_PhoneList_Directory" FromRole="PhoneList" ToRole="Directory" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_PhoneList_Employee" FromRole="PhoneList" ToRole="Employee" />
+    <NavigationProperty Name="PhoneListName" Relationship="Self.FK_PhoneList_PhoneListName" FromRole="PhoneList" ToRole="PhoneListName" />
+  </EntityType>
+  <EntityType Name="PhoneListName">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PhoneLists" Relationship="Self.FK_PhoneList_PhoneListName" FromRole="PhoneListName" ToRole="PhoneList" />
+    <NavigationProperty Name="PhoneListType" Relationship="Self.FK_PhoneListName_PhoneListType" FromRole="PhoneListName" ToRole="PhoneListType" />
+  </EntityType>
+  <EntityType Name="PhoneListType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PhoneListNames" Relationship="Self.FK_PhoneListName_PhoneListType" FromRole="PhoneListType" ToRole="PhoneListName" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WebLocation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WebURLWebLocations" Relationship="Self.FK_WebURLWebLocation_WebLocation" FromRole="WebLocation" ToRole="WebURLWebLocation" />
+  </EntityType>
+  <EntityType Name="WebURL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="WebURLWebLocations" Relationship="Self.FK_WebURLWebLocation_WebURL" FromRole="WebURL" ToRole="WebURLWebLocation" />
+  </EntityType>
+  <EntityType Name="WebURLWebLocation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="WebLocationID" Type="Int32" />
+    <Property Name="WebURLID" Type="Int32" />
+    <Property Name="DirectoryID" Type="Int32" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Directory" Relationship="Self.FK_WebURLWebLocation_Directory" FromRole="WebURLWebLocation" ToRole="Directory" />
+    <NavigationProperty Name="WebLocation" Relationship="Self.FK_WebURLWebLocation_WebLocation" FromRole="WebURLWebLocation" ToRole="WebLocation" />
+    <NavigationProperty Name="WebURL" Relationship="Self.FK_WebURLWebLocation_WebURL" FromRole="WebURLWebLocation" ToRole="WebURL" />
+  </EntityType>
+  <Association Name="FK_Address_Directory">
+    <End Role="Directory" Type="Self.Directory" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="DirectoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Departments_Directory">
+    <End Role="Directory" Type="Self.Directory" Multiplicity="0..1" />
+    <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Departments">
+        <PropertyRef Name="DirectoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DirectoryEmployee_Directory">
+    <End Role="Directory" Type="Self.Directory" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DirectoryEmployee" Type="Self.DirectoryEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DirectoryEmployee">
+        <PropertyRef Name="DirectoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhoneList_Directory">
+    <End Role="Directory" Type="Self.Directory" Multiplicity="0..1" />
+    <End Role="PhoneList" Type="Self.PhoneList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PhoneList">
+        <PropertyRef Name="DirectoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WebURLWebLocation_Directory">
+    <End Role="Directory" Type="Self.Directory" Multiplicity="0..1" />
+    <End Role="WebURLWebLocation" Type="Self.WebURLWebLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WebURLWebLocation">
+        <PropertyRef Name="DirectoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DirectoryEmployee_Employee1">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DirectoryEmployee" Type="Self.DirectoryEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DirectoryEmployee">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhoneList_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PhoneList" Type="Self.PhoneList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PhoneList">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhoneList_PhoneListName">
+    <End Role="PhoneListName" Type="Self.PhoneListName" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PhoneList" Type="Self.PhoneList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneListName">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PhoneList">
+        <PropertyRef Name="PhoneListNameID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhoneListName_PhoneListType">
+    <End Role="PhoneListType" Type="Self.PhoneListType" Multiplicity="0..1" />
+    <End Role="PhoneListName" Type="Self.PhoneListName" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneListType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PhoneListName">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WebURLWebLocation_WebLocation">
+    <End Role="WebLocation" Type="Self.WebLocation" Multiplicity="0..1" />
+    <End Role="WebURLWebLocation" Type="Self.WebURLWebLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WebLocation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WebURLWebLocation">
+        <PropertyRef Name="WebLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WebURLWebLocation_WebURL">
+    <End Role="WebURL" Type="Self.WebURL" Multiplicity="0..1" />
+    <End Role="WebURLWebLocation" Type="Self.WebURLWebLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WebURL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WebURLWebLocation">
+        <PropertyRef Name="WebURLID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CompanyDirectoryDFEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Departments" EntityType="Self.Department" />
+    <EntitySet Name="Directories" EntityType="Self.Directory" />
+    <EntitySet Name="DirectoryEmployees" EntityType="Self.DirectoryEmployee" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="PhoneLists" EntityType="Self.PhoneList" />
+    <EntitySet Name="PhoneListNames" EntityType="Self.PhoneListName" />
+    <EntitySet Name="PhoneListTypes" EntityType="Self.PhoneListType" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="WebLocations" EntityType="Self.WebLocation" />
+    <EntitySet Name="WebURLs" EntityType="Self.WebURL" />
+    <EntitySet Name="WebURLWebLocations" EntityType="Self.WebURLWebLocation" />
+    <AssociationSet Name="FK_Address_Directory" Association="Self.FK_Address_Directory">
+      <End Role="Directory" EntitySet="Directories" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Departments_Directory" Association="Self.FK_Departments_Directory">
+      <End Role="Directory" EntitySet="Directories" />
+      <End Role="Departments" EntitySet="Departments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DirectoryEmployee_Directory" Association="Self.FK_DirectoryEmployee_Directory">
+      <End Role="Directory" EntitySet="Directories" />
+      <End Role="DirectoryEmployee" EntitySet="DirectoryEmployees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhoneList_Directory" Association="Self.FK_PhoneList_Directory">
+      <End Role="Directory" EntitySet="Directories" />
+      <End Role="PhoneList" EntitySet="PhoneLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WebURLWebLocation_Directory" Association="Self.FK_WebURLWebLocation_Directory">
+      <End Role="Directory" EntitySet="Directories" />
+      <End Role="WebURLWebLocation" EntitySet="WebURLWebLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DirectoryEmployee_Employee1" Association="Self.FK_DirectoryEmployee_Employee1">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="DirectoryEmployee" EntitySet="DirectoryEmployees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhoneList_Employee" Association="Self.FK_PhoneList_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="PhoneList" EntitySet="PhoneLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhoneList_PhoneListName" Association="Self.FK_PhoneList_PhoneListName">
+      <End Role="PhoneListName" EntitySet="PhoneListNames" />
+      <End Role="PhoneList" EntitySet="PhoneLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhoneListName_PhoneListType" Association="Self.FK_PhoneListName_PhoneListType">
+      <End Role="PhoneListType" EntitySet="PhoneListTypes" />
+      <End Role="PhoneListName" EntitySet="PhoneListNames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WebURLWebLocation_WebLocation" Association="Self.FK_WebURLWebLocation_WebLocation">
+      <End Role="WebLocation" EntitySet="WebLocations" />
+      <End Role="WebURLWebLocation" EntitySet="WebURLWebLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WebURLWebLocation_WebURL" Association="Self.FK_WebURLWebLocation_WebURL">
+      <End Role="WebURL" EntitySet="WebURLs" />
+      <End Role="WebURLWebLocation" EntitySet="WebURLWebLocations" />
+    </AssociationSet>
+    <EntitySet Name="EmployeeSkills" EntityType="CompanyDirectoryDFModel.EmployeeSkill" />
+    <EntitySet Name="Skills" EntityType="CompanyDirectoryDFModel.Skill" />
+    <AssociationSet Name="FK_EmployeeSkills_Employee" Association="CompanyDirectoryDFModel.FK_EmployeeSkills_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeSkill" EntitySet="EmployeeSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeSkills_Skills" Association="CompanyDirectoryDFModel.FK_EmployeeSkills_Skills">
+      <End Role="Skill" EntitySet="Skills" />
+      <End Role="EmployeeSkill" EntitySet="EmployeeSkills" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EmployeeSkill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="SkillID" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="CompanyDirectoryDFModel.FK_EmployeeSkills_Employee" FromRole="EmployeeSkill" ToRole="Employee" />
+    <NavigationProperty Name="Skill" Relationship="CompanyDirectoryDFModel.FK_EmployeeSkills_Skills" FromRole="EmployeeSkill" ToRole="Skill" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmployeeSkills" Relationship="CompanyDirectoryDFModel.FK_EmployeeSkills_Skills" FromRole="Skill" ToRole="EmployeeSkill" />
+  </EntityType>
+  <Association Name="FK_EmployeeSkills_Employee">
+    <End Type="CompanyDirectoryDFModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="CompanyDirectoryDFModel.EmployeeSkill" Role="EmployeeSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EmployeeSkill">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeSkills_Skills">
+    <End Type="CompanyDirectoryDFModel.Skill" Role="Skill" Multiplicity="0..1" />
+    <End Type="CompanyDirectoryDFModel.EmployeeSkill" Role="EmployeeSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EmployeeSkill">
+        <PropertyRef Name="SkillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

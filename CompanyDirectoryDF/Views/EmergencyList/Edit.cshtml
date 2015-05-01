@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CompanyDirectoryDF.ViewModel.EmergencyList>
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    function boo(id) {
+        $('#hdnValue').val(id);
+        $('#PhonelistID').val();
+      
+    };
+    function boom(id)
+    {
+        $('#EmergencyListID').val(id);
+       
+    }
+</script>
+
+
+<h2>Edit Emergency List</h2>
+<p>
+    @foreach (var item in Model)
+    {
+        @Html.ActionLink("Add", "Add", new {listId = item.EmergencyListID})
+    } | 
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+@using (Html.BeginForm("Delete", "EmergencyList"))
+{
+    @Html.Hidden("hdnValue", "")
+    <table class="table">
+        @foreach (var item in Model)
+        {
+           
+            <tr>
+                <td>
+                    <b> 
+                    @Html.DisplayFor(modelItem => item.EmergencyListName)</b>
+                   
+                    @Html.Hidden("EmergencyListID", item.EmergencyListID)
+                </td>
+            </tr>
+
+            foreach (var emp in item.EmployeesInEmergencyList)
+            {
+                <tr>
+                    <td>
+                        <span style="padding:0 6px;">@Html.DisplayFor(ModelItem => emp.FullName)  </span>
+                    </td>
+                    <td>
+                        <div class="form-actions no-color">
+                            @Html.Hidden("PhonelistId", item.PhonelistID)
+                            <input id="@emp.ID" type="submit" value="DELETE" name="submit" onclick="boo(this.id); boom(@item.EmergencyListID);" />
+
+                        </div>
+                    </td>
+                </tr>
+            }
+
+
+
+
+        }
+
+
+
+    </table>
+}
+
+
+

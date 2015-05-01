@@ -1,0 +1,74 @@
+﻿@model CompanyDirectoryDF.ViewModel.DirectoryIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+     @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row text-center" style="margin:3px;">
+    <div class="label Address">
+        @(Html.Label(Model.Address.Street))
+   
+
+        @(Html.Label(Model.Address.City))
+
+        @(Html.Label(Model.Address.State))
+
+        @(Html.Label(Model.Address.Zip))
+    </div>
+</div>
+<div class="row text-center">
+    <span class="glyphicon glyphicon-phone-alt"></span> Main: @(Html.Label(Model.Address.Phone))
+</div>
+
+<table class="table">
+    <tr>
+        <th colspan="2" style="text-align:center;">
+           Name
+        </th>
+
+        <th colspan="2" style="text-align:center;">
+            Office Ext./Direct
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.Cellphone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.HomePhone)
+        </th>
+
+    </tr>
+
+
+    @foreach (var item in Model.DirectoryEmployees)
+
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Employee.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Employee.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Employee.Ext)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Employee.OfficePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Employee.Cellphone)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Employee.HomePhone)
+            </td>
+
+        </tr>
+}
+    </table>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aace62981ed84aab9e357f4e2416ea51" Name="Diagram1">
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.Address" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.Department" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.Directory" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.DirectoryEmployee" Width="1.5" PointX="6" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.Employee" Width="1.5" PointX="3.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.PhoneList" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.PhoneListName" Width="1.5" PointX="3.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.PhoneListType" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.WebLocation" Width="1.5" PointX="3.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.WebURL" Width="1.5" PointX="3.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.WebURLWebLocation" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_Address_Directory" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_Departments_Directory" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_DirectoryEmployee_Directory" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_PhoneList_Directory" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_WebURLWebLocation_Directory" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_DirectoryEmployee_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_PhoneList_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_PhoneList_PhoneListName" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_PhoneListName_PhoneListType" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_WebURLWebLocation_WebLocation" ManuallyRouted="false" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_WebURLWebLocation_WebURL" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.EmployeeSkill" Width="1.5" PointX="8.625" PointY="2.125" />
+        <EntityTypeShape EntityType="CompanyDirectoryDFModel.Skill" Width="1.5" PointX="6.375" PointY="21.25" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_EmployeeSkills_Employee" />
+        <AssociationConnector Association="CompanyDirectoryDFModel.FK_EmployeeSkills_Skills" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

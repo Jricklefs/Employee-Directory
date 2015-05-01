@@ -1,0 +1,49 @@
+﻿@model CompanyDirectoryDF.Models.PhoneList
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+<h2>Add</h2>
+
+@using (Html.BeginForm()) 
+{
+    
+
+    
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Emergency Contact</h4>
+        <hr />
+    
+
+        @*@Html.Hidden("PhoneListNameID", Model.PhoneListNameID)
+        @Html.Hidden("DirectoryID", Model.DirectoryID)*@
+
+
+        @Html.HiddenFor(model => model.PhoneListNameID)
+        @Html.HiddenFor(model => model.DirectoryID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeID, "EmployeeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EmployeeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+      
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Employee To List" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
